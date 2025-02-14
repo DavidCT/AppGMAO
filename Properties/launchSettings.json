@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AppGMAO (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "AppGMAO (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
