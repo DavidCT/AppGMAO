@@ -12,25 +12,57 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using AppGMAO.Contexto;
+using AppGMAO.Entidades;
+using Microsoft.EntityFrameworkCore;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace AppGMAO
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private List<Cliente> _clientes;
+        private int _index = 0;
+
         public MainWindow()
         {
             this.InitializeComponent();
+            CargarClientes();
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private async void CargarClientes()
         {
-            myButton.Content = "Clicked";
+            using (var context = new AppDbContext())
+            {
+                _clientes = await context.Clientes.ToListAsync();
+            }
+            MostrarCliente();
+        }
+
+        private void MostrarCliente()
+        {
+            if (_clientes != null && _clientes.Count > 0)
+            {
+                txtDescripcion.Text = _clientes[_index].DescCliente;
+            }
+        }
+
+        private void BtnAnterior_Click(object sender, RoutedEventArgs e)
+        {
+            if (_index > 0)
+            {
+                _index--;
+                MostrarCliente();
+            }
+        }
+
+        private void BtnSiguiente_Click(object sender, RoutedEventArgs e)
+        {
+            if (_index < _clientes.Count - 1)
+            {
+                _index++;
+                MostrarCliente();
+            }
         }
     }
 }
