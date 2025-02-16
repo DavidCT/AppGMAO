@@ -9,23 +9,21 @@
     Title="AppGMAO"
     mc:Ignorable="d">
 
-    <Grid Padding="20">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock
-                x:Name="txtDescripcion"
-                Margin="0,0,0,20"
-                HorizontalAlignment="Center"
-                FontSize="18"
-                Text="Cargando..."
-                TextWrapping="Wrap" />
+    <Grid Padding="50">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <StackPanel
-                HorizontalAlignment="Center"
-                Orientation="Horizontal"
-                Spacing="10">
-                <Button Click="BtnAnterior_Click" Content="Anterior" />
-                <Button Click="BtnSiguiente_Click" Content="Siguiente" />
-            </StackPanel>
-        </StackPanel>
+        <ComboBox x:Name="ComboClientes"
+                  Grid.Column="0"
+                  DisplayMemberPath="NombreCompleto"
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Stretch"
+                  IsEditable="True"
+                  Header="Selecciona un Cliente"/>
     </Grid>
 </Window>

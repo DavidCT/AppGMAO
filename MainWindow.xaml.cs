@@ -15,14 +15,15 @@ using Microsoft.UI.Xaml.Navigation;
 using AppGMAO.Contexto;
 using AppGMAO.Entidades;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 
 
 namespace AppGMAO
 {
     public sealed partial class MainWindow : Window
     {
-        private List<Cliente> _clientes;
-        private int _index = 0;
+        public ObservableCollection<Cliente> Clientes { get; set; } = new();
+        private ObservableCollection<Cliente> TodosLosClientes { get; set; } = new();
 
         public MainWindow()
         {
@@ -30,38 +31,33 @@ namespace AppGMAO
             CargarClientes();
         }
 
-        private async void CargarClientes()
+        private void CargarClientes()
         {
             using (var context = new AppDbContext())
             {
-                _clientes = await context.Clientes.ToListAsync();
+                var clientes = context.Clientes.ToList();
+                foreach (var cliente in clientes)
+                {
+                    Clientes.Add(cliente);
+                    TodosLosClientes.Add(cliente);
+                }
             }
-            MostrarCliente();
+
+            ComboClientes.ItemsSource = Clientes;
+            
         }
 
-        private void MostrarCliente()
+        private void ComboClientes_TextSubmitted(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            if (_clientes != null && _clientes.Count > 0)
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                txtDescripcion.Text = _clientes[_index].DescCliente;
-            }
-        }
+                var filtro = sender.Text.ToLower();
+                Clientes.Clear();
 
-        private void BtnAnterior_Click(object sender, RoutedEventArgs e)
-        {
-            if (_index > 0)
-            {
-                _index--;
-                MostrarCliente();
-            }
-        }
-
-        private void BtnSiguiente_Click(object sender, RoutedEventArgs e)
-        {
-            if (_index < _clientes.Count - 1)
-            {
-                _index++;
-                MostrarCliente();
+                foreach (var cliente in TodosLosClientes.Where(c => c.DescCliente.ToLower().Contains(filtro)))
+                {
+                    Clientes.Add(cliente);
+                }
             }
         }
     }
