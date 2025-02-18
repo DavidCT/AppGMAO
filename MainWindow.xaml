@@ -7,23 +7,44 @@
     xmlns:local="using:AppGMAO"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="AppGMAO"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
 
-    <Grid Padding="50">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Grid Background="#1E1E1E">
 
-        <ComboBox x:Name="ComboClientes"
-                  Grid.Column="0"
-                  DisplayMemberPath="NombreCompleto"
-                  VerticalAlignment="Top"
-                  HorizontalAlignment="Stretch"
-                  IsEditable="True"
-                  Header="Selecciona un Cliente"/>
+        <muxc:NavigationView x:Name="NavView"
+                             IsSettingsVisible="False"
+                             SelectionChanged="NavView_SelectionChanged"
+                             PaneTitle="David"
+                             PaneDisplayMode="Left"
+                             IsPaneToggleButtonVisible="False">
+
+            <!-- Encabezado con el perfil -->
+            <muxc:NavigationView.Header>
+                <StackPanel Orientation="Horizontal" Margin="0,16,0,16">
+                    <Ellipse Width="48" Height="48" Fill="Gray" Margin="0,0,16,0"/>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="David" FontSize="18" Foreground="White"/>
+                        <TextBlock Text="Cuenta local" FontSize="14" Foreground="Gray"/>
+                    </StackPanel>
+                </StackPanel>
+            </muxc:NavigationView.Header>
+
+            <!-- Menú principal -->
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem Content="Inicio" Icon="Home" Tag="inicio"/>
+                <muxc:NavigationViewItem Content="Red e Internet" Icon="Globe" Tag="red"/>
+                <muxc:NavigationViewItem Content="Aplicaciones" Icon="AllApps" Tag="aplicaciones"/>
+                <muxc:NavigationViewItem Content="Cuentas" Icon="Contact" Tag="cuentas"/>
+                <muxc:NavigationViewItem Content="Hora e idioma" Icon="World" Tag="hora_idioma"/>
+                <muxc:NavigationViewItem Content="Windows Update" Icon="Sync" Tag="update"/>
+            </muxc:NavigationView.MenuItems>
+
+            <!-- Área de contenido -->
+            <Frame x:Name="ContentFrame"/>
+
+        </muxc:NavigationView>
+
     </Grid>
+
 </Window>

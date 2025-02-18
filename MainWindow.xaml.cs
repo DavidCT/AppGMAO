@@ -43,7 +43,7 @@ namespace AppGMAO
                 }
             }
 
-            ComboClientes.ItemsSource = Clientes;
+            //ComboClientes.ItemsSource = Clientes;
             
         }
 
@@ -59,6 +59,11 @@ namespace AppGMAO
                     Clientes.Add(cliente);
                 }
             }
+        }
+
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+          
         }
     }
 }
